@@ -102,5 +102,28 @@ for i in n2:
     print(i)
 '''
 
-''''''
-#排序
+'''
+#排序,不支持str和int一起排序,按照ASCII表的顺序排列
+n = ['y','a','e','A','b','c','z']
+print(n)
+n.sort()
+print(n)
+
+n = ['!','y','a','#','e','A','b','c','z']
+n.sort()
+print(n)
+
+## 反转
+n.reverse()
+print(n)
+'''
+
+'''
+#拼接
+n1 = ['y','a','e','A','b','c','z']
+n2 = [1,2,3,4]
+
+print(n1 + n2)
+n1.extend(n2) #extend()拼接后，原先的修改原先的n1,n2不变
+print(n1,n2)
+'''
