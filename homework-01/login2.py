@@ -1,12 +1,6 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # -*- coding:utf-8 -*-
-import json,hashlib
-
-def lock(users):
-    #将login()函数中修改账户状态的users字典传入该函数，该函数负责持久化数据
-    f = open("user.json", "wb+")
-    f.write(bytes(json.dumps(users), encoding="utf-8"))
-    f.close()
+import hashlib,json
 
 def md5(passwd):
     '''
@@ -17,6 +11,41 @@ def md5(passwd):
     hash = hashlib.md5(bytes("staryjie", encoding="utf-8"))
     hash.update(bytes(passwd, encoding="utf-8"))
     return hash.hexdigest()
+
+def writeIn(users):
+    f = open("user.json", "wb+")
+    f.write(bytes(json.dumps(users), encoding="utf-8"))
+    f.close()
+
+def lock(users):
+    #将login()函数中修改账户状态的users字典传入该函数，该函数负责持久化数据
+    f = open("user.json", "wb+")
+    f.write(bytes(json.dumps(users), encoding="utf-8"))
+    f.close()
+
+def register(username, passwd):
+    '''
+    实现用户注册功能
+    :param username:用户名
+    :param passwd:用户输入的密码
+    :return:返回知否注册成功
+    '''
+    f = open("user.json", "rb+")
+    users = json.load(f)
+    f.close()
+    if username in users.keys():
+        print("This username has been used!")
+        return False
+    else:
+        user = {
+            username : {
+                "password" : md5(passwd),
+                "isLocked" : True,
+            }
+        }
+        users.update(user)
+        writeIn(users)
+        return True
 
 def login():
     #读取json文件中的账户信息，放到users字典中
@@ -56,6 +85,20 @@ def login():
     f.close()
     return users
 
+def main():
+    '''
+    主函数，实现用户登录和注册的选择
+    :return:
+    '''
+    print("1.login；2.register")
+    num = input("Pls enter the num below： ")
+    if num == "2":
+        username = input("username：")
+        passwd = input("password：")
+        register(username, passwd)
+    elif num == "1":
+        login()
+    else:
+        print("No such option!")
 
-# 调用登陆函数
-login()
+main()
