@@ -127,3 +127,28 @@ print(n1 + n2)
 n1.extend(n2) #extend()拼接后，原先的修改原先的n1,n2不变
 print(n1,n2)
 '''
+
+'''
+#清空列表
+n1 = ['y','a','e','A','b','c','z']
+n1.clear()
+print(n1)
+'''
+
+# 拷贝
+n2 = [1,2,3,4]
+n3 = n2.copy()
+print(n3)
+##
+
+n = [3,4,5]
+print(n)
+n4 = n
+n[1] = 'hehe'
+print(n)
+print(n4)
+#### copy
+n5 = n.copy()
+n[1] = 'staryjie'
+print(n)
+print(n5)
