@@ -24,3 +24,12 @@
 	在login.py的基础上添加了注册功能，实现了用户密码的加密处理。
 
 经测试，可以实现以上功能。
+
+### 测试账号信息 ###
+
+    username：user1
+    password：123456
+    username：user2
+    password：123456
+    username：user3
+    password：123456
