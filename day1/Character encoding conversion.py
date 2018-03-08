@@ -11,6 +11,7 @@ python2 默认编码是ASCII
 
     Python2 中 Unicode 是单独的类型
 '''
+
 '''
 python3 执行代码的过程:
 
