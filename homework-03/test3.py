@@ -2,12 +2,8 @@
 # -*- coding:utf-8 -*-
 import login,json,sys
 
-goods = [
-    {"name": "电脑", "price": 1999},
-    {"name": "鼠标", "price": 10},
-    {"name": "游艇", "price": 20},
-    {"name": "美女", "price": 998},
-]
+goods = [{"name": "电脑", "price": 1999},{"name": "鼠标", "price": 10},{"name": "游艇", "price": 20},{"name": "美女", "price": 998},]
+
 asset_all = 0
 totalPrice = 0
 real_price = 0
@@ -16,13 +12,8 @@ his_car = {}
 his_total = 0
 car = {}
 username = login.login()
-prodcuts = {
-    "prodcuts":car,
-    "prodcuts":balance
-}
-info = {
-    username:prodcuts,
-}
+prodcuts = {"prodcuts":car,"prodcuts":balance}
+info = {username:prodcuts,}
 
 f = open("test.json", "r+")
 info = json.load(f)
@@ -53,9 +44,7 @@ def shopping(real_price,totalPrice):
             prodcuts["balance"] = balance
             car.update(his_car)
             prodcuts["prodcuts"] = car
-            info_new = {
-                username:prodcuts,
-            }
+            info_new = {username:prodcuts,}
             info.update(info_new)
             write_in(info)
             sys.exit()
