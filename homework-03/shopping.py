@@ -2,6 +2,7 @@
 # -*- coding:utf-8 -*-
 import login,json,sys
 
+# 商品列表
 goods = [
     {"name": "电脑", "price": 1999},
     {"name": "鼠标", "price": 10},
@@ -9,32 +10,35 @@ goods = [
     {"name": "美女", "price": 998},
 ]
 
-asset_all = 0
-totalPrice = 0
-real_price = 0
-balance = 0
-his_total = 0
-car = {}
+asset_all = 0 #总资产
+totalPrice = 0 #购物总花费，用于在加入购物车的时候判断是否超过总资产
+real_price = 0 #真正购买的花费，因为totalPrice只是拿来判断是否超过总资产，当超过总资产时，totalPrice并不是你真正能购买的物品的总价
+balance = 0 # 账户余额
+his_total = 0 # 历史购物总费用
+car = {} # 购物过程中的购物车（能够真正购买的）
 
-username = login.login()
+username = login.login() #调用之前的用户登陆作业，实现用户登陆和锁定
 
+# 产品字典，用于将存储已购买的商品信息
 prodcuts = {
     "prodcuts":car,
     "prodcuts":balance
 }
+#通过username当key来存储不同用户的购买信息，持久化到文件中（再次打开就是用户的历史购买信息）
 info = {
     username:prodcuts,
 }
-
+# 读取之前持久化的数据，可以用来判断用户是否有过购买记录
 f = open("info.json", "r+")
 info = json.load(f)
 f.close()
 
+# 定义持久化数据的函数
 def write_in(info):
     f = open("test.json", "wb+")
     f.write(bytes(json.dumps(info), encoding="utf-8"))
     f.close()
-
+# 如果用户有购买的历史记录，则直接显示历史购买记录，并提示余额和已使用额度
 if username in info.keys():
     his_car = info[username]['prodcuts']
     asset_all = info[username]['balance']
@@ -49,13 +53,13 @@ if username in info.keys():
     print("")
 
 
-
+    # 进入购物流程
     while True:
         for k, v in enumerate(goods, 1):
-            print(k, v["name"], v["price"])
+            print(k, v["name"], v["price"]) # 打印商品列表
 
         id = input("请输入商品序号(q/Q结算)：")
-        if id.lower() == "q":
+        if id.lower() == "q": # 实现用户退出时的结算
             print("结算：")
             print("商品\t单价\t数量")
             for k, v in car.items():
@@ -67,15 +71,16 @@ if username in info.keys():
             balance = asset_all - real_price
             print("账户余额：", balance)
             prodcuts["balance"] = balance
-            car.update(his_car)
+            car.update(his_car) #将历史购买清单更新到购物车中，仅用于添加用户历史购买记录，资金已在这之前结算
 
-            prodcuts["prodcuts"] = car
+            prodcuts["prodcuts"] = car # 更新用户已经购买的商品信息
 
+            # 临时创建一个字典，用于将新购买的商品信息更新到总的购买信息中
             info_new = {
                 username:prodcuts,
             }
-            info.update(info_new)
-            write_in(info)
+            info.update(info_new) #将新购买的商品信息更新到总的购买信息中
+            write_in(info) # 持久化数据
             sys.exit()
 
         id = int(id)
