@@ -2,28 +2,44 @@
 # -*- coding:utf-8 -*-
 import login,json,sys
 
-goods = [{"name": "电脑", "price": 1999},{"name": "鼠标", "price": 10},{"name": "游艇", "price": 20},{"name": "美女", "price": 998},]
+# 商品列表
+goods = [
+    {"name": "电脑", "price": 1999},
+    {"name": "鼠标", "price": 10},
+    {"name": "游艇", "price": 20},
+    {"name": "美女", "price": 998},
+]
 
-asset_all = 0
-totalPrice = 0
-real_price = 0
-balance = 0
-his_car = {}
-his_total = 0
-car = {}
-username = login.login()
-prodcuts = {"prodcuts":car,"prodcuts":balance}
-info = {username:prodcuts,}
+asset_all = 0 #总资产
+totalPrice = 0 #购物总花费，用于在加入购物车的时候判断是否超过总资产
+real_price = 0 #真正购买的花费，因为totalPrice只是拿来判断是否超过总资产，当超过总资产时，totalPrice并不是你真正能购买的物品的总价
+balance = 0 # 账户余额
+his_total = 0 # 历史购物总费用
+car = {} # 购物过程中的购物车（能够真正购买的）
 
-f = open("test.json", "r+")
+username = login.login() #调用之前的用户登陆作业，实现用户登陆和锁定
+
+# 产品字典，用于将存储已购买的商品信息
+prodcuts = {
+    "prodcuts":car,
+    "prodcuts":balance
+}
+#通过username当key来存储不同用户的购买信息，持久化到文件中（再次打开就是用户的历史购买信息）
+info = {
+    username:prodcuts,
+}
+# 读取之前持久化的数据，可以用来判断用户是否有过购买记录
+f = open("info.json", "r+")
 info = json.load(f)
 f.close()
 
+# 定义持久化数据的函数
 def write_in(info):
     f = open("test.json", "wb+")
     f.write(bytes(json.dumps(info), encoding="utf-8"))
     f.close()
 
+#定义购物函数，实现商品添加到购物车的所有流程
 def shopping(real_price,totalPrice):
     while True:
         for k, v in enumerate(goods, 1):
