@@ -14,6 +14,7 @@ asset_all = 0 #总资产
 totalPrice = 0 #购物总花费，用于在加入购物车的时候判断是否超过总资产
 real_price = 0 #真正购买的花费，因为totalPrice只是拿来判断是否超过总资产，当超过总资产时，totalPrice并不是你真正能购买的物品的总价
 balance = 0 # 账户余额
+his_car = {} #历史购物记录
 his_total = 0 # 历史购物总费用
 car = {} # 购物过程中的购物车（能够真正购买的）
 
@@ -35,12 +36,12 @@ f.close()
 
 # 定义持久化数据的函数
 def write_in(info):
-    f = open("test.json", "wb+")
+    f = open("info.json", "wb+")
     f.write(bytes(json.dumps(info), encoding="utf-8"))
     f.close()
 
 #定义购物函数，实现商品添加到购物车的所有流程
-def shopping(real_price,totalPrice):
+def shopping(real_price,totalPrice,his_car):
     while True:
         for k, v in enumerate(goods, 1):
             print(k, v["name"], v["price"])
@@ -109,7 +110,7 @@ if username in info.keys():
     print("----------------------------")
     print("")
 
-    shopping(real_price, totalPrice)
+    shopping(real_price, totalPrice,his_car)
 else:
     asset_all = input("请输入您的总资产：")
     if asset_all.isdigit():
@@ -117,4 +118,4 @@ else:
     else:
         print("输入有误，请输入数字！")
 
-shopping(real_price,totalPrice)
+shopping(real_price,totalPrice,his_car)

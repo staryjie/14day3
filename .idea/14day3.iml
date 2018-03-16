@@ -5,6 +5,11 @@
       <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/day1" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/homework-01" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/forTest" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/homework-02" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/mysql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/homework-03" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/文件操作和函数" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
